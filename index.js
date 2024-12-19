@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors'); // Tambahkan library CORS
 
 const app = express();
 const PORT = 3000;
@@ -11,6 +12,11 @@ const imagesDir = path.join(__dirname, 'images');
 if (!fs.existsSync(imagesDir)) {
     fs.mkdirSync(imagesDir); // Buat folder jika belum ada
 }
+
+// Middleware untuk mengizinkan CORS
+app.use(cors()); // Mengizinkan semua origin
+// Jika ingin lebih spesifik, gunakan seperti ini:
+// app.use(cors({ origin: 'http://your-allowed-origin.com' }));
 
 // Middleware untuk menyajikan file dari folder "images"
 app.use('/images', express.static(imagesDir));
